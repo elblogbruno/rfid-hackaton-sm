@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       catchError: (_,__) {},
       initialData: null,
       value: AuthService().user,
-      child:MaterialApp(
+      child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           FormBuilderLocalizations.delegate,
         ],
         darkTheme: ThemeData.dark(),
-        home: const Wrapper(),
+        home: Wrapper(),
       ),
     );
 

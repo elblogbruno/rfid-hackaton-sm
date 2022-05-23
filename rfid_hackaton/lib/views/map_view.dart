@@ -52,6 +52,9 @@ class _MapViewState extends State<MapView> {
   final List<BusStop> _busStops = [];
   final List<BusRtData> _busLines = [];
 
+  //
+  bool animateAtStart = true;
+
   List<DropdownMenuItem<String>> get dropdownItems{
     if (_busStops.isEmpty) {
       List<DropdownMenuItem<String>> items = [];
@@ -126,21 +129,28 @@ class _MapViewState extends State<MapView> {
   /// It hides the panel for some seconds so the user can see the map
   /// and then it As the panel again
   Future<void> showMarkerAnimation(GoogleMapController controller, String query) async {
-    _pc.close();
 
-    // hide keyboard
-    FocusScope.of(context).requestFocus(FocusNode());
+    if (animateAtStart) {
+      await _pc.close();
 
-    // wait for 1 second
-    await Future.delayed(const Duration(seconds: 3));
+      // hide keyboard
+      FocusScope.of(context).requestFocus(FocusNode());
+
+      // wait for 1 second
+      await Future.delayed(const Duration(seconds: 3));
+    }
     // then move to the marker
     LatLng latLng = markers[MarkerId(query)]!.position;
 
     LatLng  offsetLoc = LatLng(latLng.latitude - 0.010, latLng.longitude);
 
     controller.animateCamera(CameraUpdate.newLatLngZoom(offsetLoc, 14.4746));
-    // wait for 1 second
-    _pc.open();
+
+    if (animateAtStart) {
+      // wait for 1 second
+      await _pc.open();
+    }
+
   }
 
   // generates a marker for query and shows it with animation on the map
@@ -217,9 +227,10 @@ class _MapViewState extends State<MapView> {
       String locationName  =  GpsService().getNearestBusStop(_currentPosition.latitude, _currentPosition.longitude, _busStops);
       String possibleDestinationName  =  GpsService().getFurtherBusStop(_currentPosition.latitude, _currentPosition.longitude, _busStops);
 
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Nearest bus stop is $locationName'),
-        duration: const Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 1000),
       ));
 
       bool savedLocation = saveLocation(locationName, false);
@@ -237,8 +248,6 @@ class _MapViewState extends State<MapView> {
           duration: const Duration(milliseconds: 1500),
         ));
       }
-
-      //MapService().zoomToMarkers(_controller, _locationLatLng, _destinationLatLng);
 
     }else{
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -265,8 +274,6 @@ class _MapViewState extends State<MapView> {
       }
     }
   }
-
-
 
   @override
   void initState() {
@@ -311,7 +318,15 @@ class _MapViewState extends State<MapView> {
 
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    print("Back To old Screen");
 
+    //ScaffoldMessenger.of(context).clearSnackBars();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -501,6 +516,7 @@ class _MapViewState extends State<MapView> {
                 const SizedBox(height: 10,),
               if (_location != "")
                 DropdownButtonFormField(
+                    isExpanded: true,
                     focusNode: textFirstFocusNode,
                     decoration: buildInputDecoration(),
                     value: _location,
@@ -516,7 +532,7 @@ class _MapViewState extends State<MapView> {
                       }
                     },
                     items: dropdownItems
-                ),
+              ),
               if (_destination != "")
                 const SizedBox(height: 10,),
               if (_destination != "")
@@ -531,6 +547,7 @@ class _MapViewState extends State<MapView> {
                 const SizedBox(height: 10,),
               if (_destination != "")
                 DropdownButtonFormField(
+                    isExpanded: true,
                     focusNode: textSecondFocusNode,
                     decoration: buildInputDecoration(),
                     value: _destination,
@@ -546,7 +563,7 @@ class _MapViewState extends State<MapView> {
                       }
                     },
                     items: dropdownItems
-                ),
+              ),
               if (_destination != "")
                 const SizedBox(height: 10,),
                 ElevatedButton(
@@ -587,7 +604,7 @@ class _MapViewState extends State<MapView> {
               polylines: polylines,
               linesToUse: linesToUse,
               markers: markers,
-              busStops: null,),)
+              busStops: null, showAppBar: true,),)
         );
       });
     }
@@ -660,6 +677,7 @@ class _MapViewState extends State<MapView> {
     return InputDecoration(
       //hintText: "Enter a location",
       //prefixIcon: const Icon(Icons.location_city),
+
       contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(circularRadius),

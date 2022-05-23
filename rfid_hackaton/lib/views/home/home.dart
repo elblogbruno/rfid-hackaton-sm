@@ -20,23 +20,16 @@ class Home extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Home> {
-  int _counter = 0;
-  List<Widget> bodyWidgets = [MapView(title: 'New Route'), feedbackForm(), ProfilePage(), RealtimeDashboard(title: 'Realtime Dashboard'), HomePage()];
+  List<Widget> bodyWidgets = [const MapView(title: 'New Route'), const ProfilePage(),   const feedbackForm(), HomePage()];
   int body_widget_index = 0;
 
   final AuthService _auth = AuthService();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-
       appBar: AppBar(
 
         title: Text(widget.title),
@@ -73,37 +66,17 @@ class _MyHomePageState extends State<Home> {
               leading: Icon(Icons.account_circle),
               onTap: (){
                 setState(() {
-                  body_widget_index = 2;
-                  Navigator.pop(context);
-                });
-              },
-            ),
-            // ListTile(
-            //   title: Text("upload image test"),
-            //   leading: Icon(Icons.create_new_folder),
-            //   onTap: (){
-            //     setState(() {
-            //       body_widget_index = 4;
-            //       Navigator.pop(context);
-            //     });
-            //   },
-            // ),
-            ListTile(
-              title: Text("Send feedback"),
-              leading: Icon(Icons.feedback_outlined),
-              onTap: (){
-                setState(() {
                   body_widget_index = 1;
                   Navigator.pop(context);
                 });
               },
             ),
             ListTile(
-              title: Text("Realtime (IoT per buseros)"),
-              leading: Icon(Icons.add_location),
+              title: Text("Send feedback"),
+              leading: Icon(Icons.feedback_outlined),
               onTap: (){
                 setState(() {
-                  body_widget_index = 3;
+                  body_widget_index = 2;
                   Navigator.pop(context);
                 });
               },

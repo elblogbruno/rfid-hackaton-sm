@@ -28,7 +28,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading():Scaffold(
+    return loading ? Loading(): Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -91,9 +91,10 @@ class _SignInState extends State<SignIn> {
                   if(_formKey.currentState!.validate()){
                     setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, passwd);
+
                     if(result == null){
                       setState(() {
-                        error = 'could not sign in with credentials';
+                        error = 'Could not sign in with credentials';
                         loading = false;
                       });
                     }
@@ -109,12 +110,12 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
+              /*ElevatedButton(
                 child: Text('Realtime (IoT per buseros)'),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RealtimeDashboard(title: 'IoT Bus Company',)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RealtimeDashboard(title: 'IoT Bus Company', showAppBar: true,)));
                 },
-              ),
+              ),*/
             ],
           )
         )

@@ -68,7 +68,7 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                     child: Text('Realtime (IoT per buseros)'),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RealtimeDashboard(title: 'IoT Bus Company',)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RealtimeDashboard(title: 'IoT Bus Company', showAppBar: true,)));
 
                     },
                   ),

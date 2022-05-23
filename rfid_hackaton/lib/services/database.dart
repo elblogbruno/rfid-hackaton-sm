@@ -21,7 +21,8 @@ class DatabaseService {
       'imagePath': imagePath,
       'sex':sex,
       'city': city,
-      'viatges' : 0
+      'viatges' : 0,
+      'isBusCompany': false
       // 'age':15
     });
   }

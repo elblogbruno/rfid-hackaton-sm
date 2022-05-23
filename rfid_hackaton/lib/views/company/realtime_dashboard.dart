@@ -17,7 +17,7 @@ import '../../services/realtime_database.dart';
 
 
 class RealtimeDashboard extends StatefulWidget {
-  const RealtimeDashboard({Key? key, required this.title}) : super(key: key);
+  const RealtimeDashboard({Key? key, required this.title, required this.showAppBar}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -29,6 +29,7 @@ class RealtimeDashboard extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final bool showAppBar;
 
   @override
   State<RealtimeDashboard> createState() => _RealtimeDashboardState();
@@ -58,7 +59,7 @@ class _RealtimeDashboardState extends State<RealtimeDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BusView(title: widget.title, isClient: false, busStops: busStops);
+    return BusView(title: widget.title, isClient: false, busStops: busStops, showAppBar: widget.showAppBar);
   }
 
 

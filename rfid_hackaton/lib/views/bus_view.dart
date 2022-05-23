@@ -12,7 +12,7 @@ import '../services/map_service.dart';
 import '../services/realtime_database.dart';
 
 class BusView extends StatefulWidget {
-  const BusView({Key? key, required this.title, required this.isClient, this.polylines,  this.markers, this.origin, this.destination, this.linesToUse, this.busStops}) : super(key: key);
+  const BusView({Key? key, required this.title, required this.isClient, required this.showAppBar, this.polylines,  this.markers, this.origin, this.destination, this.linesToUse, this.busStops}) : super(key: key);
 
   final String title;
 
@@ -24,6 +24,7 @@ class BusView extends StatefulWidget {
   final Map<MarkerId, Marker>? markers;
 
   final bool isClient;
+  final bool showAppBar;
 
   final Map<String, BusStop>? busStops;
 
@@ -231,21 +232,23 @@ class _BusViewState extends State<BusView> {
       topRight: Radius.circular(circularRadius),
     );
 
+    AppBar appBar = AppBar(
+      title: Text(widget.title),
+      centerTitle: true,
+      actions: [
+        TextButton(
+          onPressed: ()=>{
+            setState(() {
+              _followBus = !_followBus;
+            }),
+          },
+          child: Text(_followBus ? 'Unfollow Bus' : 'Follow Bus'),
+        ),
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-        actions: [
-          TextButton(
-            onPressed: ()=>{
-              setState(() {
-                _followBus = !_followBus;
-              }),
-            },
-            child: Text(_followBus ? 'Unfollow Bus' : 'Follow Bus'),
-          ),
-        ],
-      ),
+      appBar: widget.showAppBar ? appBar : null,
       body: SlidingUpPanel(
           renderPanelSheet: false,
           borderRadius:  radius,

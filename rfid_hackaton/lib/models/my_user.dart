@@ -10,6 +10,8 @@ class MyUser {
   final String? imagePath;
   final int? viatges;
 
+  final bool? isBusCompany;
+
   MyUser({this.sex,
       this.name,
       this.email,
@@ -19,7 +21,9 @@ class MyUser {
       this.isDarkMode,
       this.uid,
       this.imagePath,
-      this.viatges});
+      this.viatges,
+      this.isBusCompany
+  });
 
   MyUser.fromSnapshot(Map<String, dynamic> snapshot)
       : uid = snapshot['uid'],
@@ -31,5 +35,6 @@ class MyUser {
         isDarkMode = snapshot['isDarkMode'],
         sex = snapshot['sex'],
         imagePath = snapshot['imagePath'],
-        viatges = snapshot['viatges'];
+        viatges = snapshot['viatges'],
+        isBusCompany = snapshot['isBusCompany'];
 }

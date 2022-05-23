@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rfid_hackaton/models/my_user.dart';
 import 'package:rfid_hackaton/views/authenticate/authenticate.dart';
+import 'package:rfid_hackaton/views/company/realtime_dashboard.dart';
 import 'package:rfid_hackaton/views/home/home.dart';
 
 class Wrapper extends StatelessWidget {
@@ -11,11 +12,17 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final user = Provider.of<MyUser?>(context);
-    print(user);
+
+    print( "User in WRAPPER: " + user.toString());
+
     if (user == null){
       return Authenticate();
     } else {
-      return Home(title: 'RFID Bus Tracker');
+      if (user.isBusCompany == true){
+        return  const RealtimeDashboard(title: 'Realtime Dashboard', showAppBar: false,);
+      } else {
+        return const Home(title: 'RFID Bus Tracker');
+      }
     }
     // return Home o Authenticate, depenent si està logejat
 

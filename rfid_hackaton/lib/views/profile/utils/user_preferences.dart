@@ -11,6 +11,6 @@ class UserPreferences {
     uid: 'test',
     city: 'Barcelona',
     co2saved: 12,
-
+    isBusCompany: false,
   );
 }
